@@ -1,8 +1,5 @@
 package gameFiles;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -33,7 +30,7 @@ public class Home {
 	   }
 	
 	public void prepareGUI(){
-		mainFrame = new JFrame("Java Swing Examples");
+		mainFrame = new JFrame("Trivia Quiz");
 	      mainFrame.setSize(400,400);
 	      mainFrame.setLayout(new GridLayout(3, 1));
 	      
@@ -56,26 +53,49 @@ public class Home {
 	}
 	
 	private void showTextFieldDemo(){
-	      headerLabel.setText("Control in action: JTextField"); 
+	      headerLabel.setText("Welcome to out page. Sign Up or Log In"); 
+	      
+	      JLabel newUserName = new JLabel("New User Name", JLabel.RIGHT);
+	      JLabel newPassWord = new JLabel("New Password", JLabel.CENTER);
+	      JLabel confirmNewPassword = new JLabel("Confirm New PassWord", JLabel.LEFT);
+	      final JTextField newUserText = new JTextField(6);
+	      final JPasswordField newPasswordText = new JPasswordField(6);
+	      final JPasswordField confirmNewPasswordText = new JPasswordField(6);
+	      
+	      JButton signUpButton = new JButton("Sign Up");
+	      signUpButton.addActionListener(new ActionListener() {
+	    	  public void actionPerformed(ActionEvent e){
+	    		  String data = "Username " + newUserText.getText();
+	    		  data += ", Password: " + new String(newPasswordText.getPassword() + ", Confirmed Password: " + new String(confirmNewPasswordText.getPassword()));
+	    		  statusLabel.setText(data);
+	    	  }
+	      });
 
-	      JLabel  namelabel= new JLabel("User ID: ", JLabel.RIGHT);
+	      JLabel  namelabel= new JLabel("User Name: ", JLabel.RIGHT);
 	      JLabel  passwordLabel = new JLabel("Password: ", JLabel.CENTER);
 	      final JTextField userText = new JTextField(6);
 	      final JPasswordField passwordText = new JPasswordField(6);      
 
-	      JButton loginButton = new JButton("Login");
-	      loginButton.addActionListener(new ActionListener() {
+	      JButton logInButton = new JButton("Login");
+	      logInButton.addActionListener(new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {     
 	            String data = "Username " + userText.getText();
 	            data += ", Password: " + new String(passwordText.getPassword()); 
 	            statusLabel.setText(data);        
 	         }
 	      }); 
+	      controlPanel.add(newUserName);
+	      controlPanel.add(newUserText);
+	      controlPanel.add(newPassWord);
+	      controlPanel.add(newPasswordText);
+	      controlPanel.add(confirmNewPassword);
+	      controlPanel.add(confirmNewPasswordText);
+	      controlPanel.add(signUpButton);
 	      controlPanel.add(namelabel);
 	      controlPanel.add(userText);
 	      controlPanel.add(passwordLabel);       
 	      controlPanel.add(passwordText);
-	      controlPanel.add(loginButton);
+	      controlPanel.add(logInButton);
 	      mainFrame.setVisible(true);  
 	   }
 }
