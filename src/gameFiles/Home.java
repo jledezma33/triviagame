@@ -31,7 +31,7 @@ public class Home {
 	
 	public void prepareGUI(){
 		mainFrame = new JFrame("Trivia Quiz");
-	      mainFrame.setSize(400,400);
+	      mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	      mainFrame.setLayout(new GridLayout(3, 1));
 	      
 	      mainFrame.addWindowListener(new WindowAdapter() {
@@ -53,7 +53,7 @@ public class Home {
 	}
 	
 	private void showTextFieldDemo(){
-	      headerLabel.setText("Welcome to out page. Sign Up or Log In"); 
+	      headerLabel.setText("Welcome to our page. Sign Up or Log In"); 
 	      
 	      JLabel newUserName = new JLabel("New User Name", JLabel.RIGHT);
 	      JLabel newPassWord = new JLabel("New Password", JLabel.CENTER);
