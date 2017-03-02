@@ -1,5 +1,7 @@
 package gameFiles;
 
+import java.awt.event.ActionEvent;
+
 import javax.swing.JFrame;
 
 public class GameUI extends JFrame{
@@ -8,7 +10,7 @@ public class GameUI extends JFrame{
     private javax.swing.JLabel CategoryLabel;
     private javax.swing.JComboBox<String> DifficultyDropMenu;
     private javax.swing.JLabel DifficultyLabel;
-    private javax.swing.JPanel GamePanel;
+    private javax.swing.JPanel OptionsPanel;
     private javax.swing.JButton StartButton;
     private javax.swing.JButton SignButton;
     private javax.swing.JButton LogButton;
@@ -38,12 +40,12 @@ public class GameUI extends JFrame{
     private javax.swing.JLabel CurrentScoreLabel;
     private javax.swing.JLabel QuestionLabel;
     private javax.swing.JLabel QuestionsContentLabel;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel GamePanel;
 	
 	public GameUI() {
-		//initSignLogComponents();
-		//initOptionsComponents();
-		//initGameComponents();
+		initSignLogComponents();
+		initOptionsComponents();
+		initGameComponents();
 		initResultComponents();
 	}
 	
@@ -74,8 +76,21 @@ public class GameUI extends JFrame{
         jLabel7.setText("ConfirmPassword");
 
         SignButton.setText("Submit");
+        SignButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpClicked(evt);
+            }
 
+			
+        });
         LogButton.setText("Submit");
+        LogButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogInClicked(evt);
+            }
+
+			
+        });
 
         jLabel6.setText("Password");
 
@@ -177,11 +192,12 @@ public class GameUI extends JFrame{
         );
 
         pack();
+        SignLogPanel.setVisible(true);
     }// </editor-fold>                        
  
 	private void initOptionsComponents() {
 
-        GamePanel = new javax.swing.JPanel();
+        OptionsPanel = new javax.swing.JPanel();
         CategoryLabel = new javax.swing.JLabel();
         DifficultyLabel = new javax.swing.JLabel();
         StartButton = new javax.swing.JButton();
@@ -193,8 +209,8 @@ public class GameUI extends JFrame{
         setResizable(false);
         setSize(new java.awt.Dimension(800, 450));
 
-        GamePanel.setMinimumSize(new java.awt.Dimension(800, 450));
-        GamePanel.setPreferredSize(new java.awt.Dimension(800, 450));
+        OptionsPanel.setMinimumSize(new java.awt.Dimension(800, 450));
+        OptionsPanel.setPreferredSize(new java.awt.Dimension(800, 450));
 
         CategoryLabel.setBackground(new java.awt.Color(102, 255, 102));
         CategoryLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -204,6 +220,13 @@ public class GameUI extends JFrame{
         DifficultyLabel.setText("Difficulty");
 
         StartButton.setText("Start Game");
+        StartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartGameClicked(evt);
+            }
+
+			
+        });
 
         CategoryDropMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anime", "Video Games", "Movies", "Mythology", "Live Theater", " " }));
         CategoryDropMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -214,8 +237,8 @@ public class GameUI extends JFrame{
 
         DifficultyDropMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Easy", "Medium", "Hard" }));
 
-        javax.swing.GroupLayout GamePanelLayout = new javax.swing.GroupLayout(GamePanel);
-        GamePanel.setLayout(GamePanelLayout);
+        javax.swing.GroupLayout GamePanelLayout = new javax.swing.GroupLayout(OptionsPanel);
+        OptionsPanel.setLayout(GamePanelLayout);
         GamePanelLayout.setHorizontalGroup(
             GamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GamePanelLayout.createSequentialGroup()
@@ -253,19 +276,20 @@ public class GameUI extends JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(GamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(OptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(GamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(OptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        OptionsPanel.setVisible(false);
     }// </editor-fold>                        
 
 	private void initGameComponents() {
 
-//        jPanel2 = new javax.swing.JPanel();
+        GamePanel = new javax.swing.JPanel();
         QuestionLabel = new javax.swing.JLabel();
         QuestionsContentLabel = new javax.swing.JLabel();
         AnswerOp1 = new javax.swing.JButton();
@@ -276,7 +300,7 @@ public class GameUI extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setMinimumSize(new java.awt.Dimension(800, 450));
+        GamePanel.setMinimumSize(new java.awt.Dimension(800, 450));
 
         QuestionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         QuestionLabel.setText("Question:");
@@ -285,6 +309,13 @@ public class GameUI extends JFrame{
         QuestionsContentLabel.setText("Question goes here");
 
         AnswerOp1.setText("Option 1");
+        AnswerOp1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnswerPicked(evt);
+            }
+
+			
+        });
 
         AnswerOp2.setText("Option 2");
 
@@ -295,8 +326,8 @@ public class GameUI extends JFrame{
         CurrentScoreLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         CurrentScoreLabel.setText("Score: 000000");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(GamePanel);
+        GamePanel.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -349,16 +380,18 @@ public class GameUI extends JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(GamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(GamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        GamePanel.setVisible(false);
+
     }// </editor-fold>                        
 
 	private void initResultComponents() {
@@ -383,8 +416,22 @@ public class GameUI extends JFrame{
         ChallengeButton.setText("Challenge a Friend");
 
         MenuButton.setText("Menu");
+        MenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuClicked(evt);
+            }
+
+			
+        });
 
         ReplayButton.setText("Replay");
+        ReplayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReplayClicked(evt);
+            }
+
+			
+        });
 
         javax.swing.GroupLayout ResultPanelLayout = new javax.swing.GroupLayout(ResultPanel);
         ResultPanel.setLayout(ResultPanelLayout);
@@ -439,6 +486,7 @@ public class GameUI extends JFrame{
         );
 
         pack();
+        ResultPanel.setVisible(false);
     }
 
 	
@@ -447,6 +495,70 @@ public class GameUI extends JFrame{
     private void CategoryDropMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
     } 
+    
+    
+    private void LogInClicked(ActionEvent evt) {
+    	SignLogPanel.setVisible(false);
+    	OptionsPanel.setVisible(true);
+	}
+    
+    private void SignUpClicked(ActionEvent evt) {
+    	SignLogPanel.setVisible(false);
+    	OptionsPanel.setVisible(true);
+	}
+    
+    private void StartGameClicked(ActionEvent evt) {
+    	OptionsPanel.setVisible(false);
+    	GamePanel.setVisible(true);
+	}
+    private void AnswerPicked(ActionEvent evt) {
+    	GamePanel.setVisible(false);
+    	ResultPanel.setVisible(true);
+	}
+    private void MenuClicked(ActionEvent evt) {
+    	ResultPanel.setVisible(false);
+    	OptionsPanel.setVisible(true);
+	}
+    private void ReplayClicked(ActionEvent evt) {
+    	ResultPanel.setVisible(false);
+    	GamePanel.setVisible(true);
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
     /**
      * @param args the command line arguments
