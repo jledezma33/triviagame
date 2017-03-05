@@ -2,6 +2,7 @@ package gameFiles;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 public class GameUI extends JFrame{
@@ -228,7 +229,7 @@ public class GameUI extends JFrame{
 			
         });
 
-        CategoryDropMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anime", "Video Games", "Movies", "Mythology", "Live Theater", " " }));
+        CategoryDropMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anime", "Video Games", "Movies", "Mythology", "Live Theater"}));
         CategoryDropMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CategoryDropMenuActionPerformed(evt);
@@ -492,9 +493,16 @@ public class GameUI extends JFrame{
 	
 
     
-    private void CategoryDropMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
+    private String CategoryDropMenuActionPerformed(java.awt.event.ActionEvent evt) {   
+    	JComboBox cat = (JComboBox) evt.getSource();
+    	String catSelection = (String) cat.getSelectedItem();
+    	return catSelection;
     } 
+    private String DifficultyDropMenuActionPerformed(java.awt.event.ActionEvent evt) {   
+    	JComboBox dif = (JComboBox) evt.getSource();
+    	String difSelection = (String) dif.getSelectedItem();
+    	return difSelection;
+    }
     
     
     private void LogInClicked(ActionEvent evt) {
