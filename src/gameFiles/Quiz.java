@@ -6,8 +6,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Quiz {
-	public static void main(String[] args) throws Exception{
-		   URL quiz = new URL("https://www.opentdb.com/api.php?amount=10&type=multiple");
+	public static void test() throws Exception{
+		   URL quiz = new URL("https://www.opentdb.com/api.php?amount=10");
 		   URLConnection connection = quiz.openConnection();
 		   BufferedReader readIn =  new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		   String line;
