@@ -19,7 +19,7 @@ public class User {
 	}
 	
 	public String serialize(){
-		return String.format("%"+15+"s%"+"%"+12+"s%"+"%"+2+"$d%", userName, password, score);
+		return String.format("%"+15+"s%"+"%"+12+"s%"+"%"+2+"$d", userName, password, score);
 	}
 	
 	public void deserialize(String raw){
