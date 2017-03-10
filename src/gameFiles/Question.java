@@ -1,5 +1,5 @@
 package gameFiles;
 
-public class Question {
+public class Question{
 	
 }

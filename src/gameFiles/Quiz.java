@@ -11,8 +11,10 @@ public class Quiz {
 		   URLConnection connection = quiz.openConnection();
 		   BufferedReader readIn =  new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		   String line;
+		   
 		   while((line = readIn.readLine()) != null){
 			   System.out.println(line);
+			   
 		   }
 		   readIn.close();  
 	   }
