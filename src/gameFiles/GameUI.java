@@ -3,13 +3,17 @@ package gameFiles;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 public class GameUI extends JFrame{
 	
-	private ArrayList<Question> questionArray = new ArrayList<Question>();
+	private Question[] questionArray;
 	private int questionNum = 0;
 
 	private javax.swing.JComboBox<String> CategoryDropMenu;
@@ -248,7 +252,12 @@ public class GameUI extends JFrame{
 		StartButton.setText("Start Game");
 		StartButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				StartGameClicked(evt);
+				try {
+					StartGameClicked(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 
@@ -557,13 +566,13 @@ public class GameUI extends JFrame{
 		}
 	}
 
-	private void StartGameClicked(ActionEvent evt) {
+	private void StartGameClicked(ActionEvent evt) throws Exception {
 		DisplayQuestion();
 		OptionsPanel.setVisible(false);
 		GamePanel.setVisible(true);
 	}
 	private void AnswerPicked(ActionEvent evt) {
-		if(questionNum+1 == questionArray.size()){
+		if(questionNum+1 == questionArray.length){
 			GamePanel.setVisible(false);
 			ResultPanel.setVisible(true);
 		}
@@ -580,8 +589,10 @@ public class GameUI extends JFrame{
 		GamePanel.setVisible(true);
 	}
 
-	private void DisplayQuestion(){
-		questionArray.get(questionNum);
+	private void DisplayQuestion() throws Exception{
+		questionArray = Quiz.getQuestions();
+		List<Question> questionList = Arrays.asList(questionArray);
+		List<String[]> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers).collect(Collectors.toList());
 	}
 
 

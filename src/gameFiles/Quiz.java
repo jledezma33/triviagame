@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Quiz {
-	public static void test() throws Exception{
+	public static Question[] getQuestions() throws Exception{
 		URL quizURL = new URL("https://opentdb.com/api.php?amount=10&type=multiple");
 		URLConnection connection = quizURL.openConnection();
 		BufferedReader readIn =  new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -35,8 +35,6 @@ public class Quiz {
 			incorrectAnswers[2] =  incorrectAnswersMatcher.group(3);	  
 			questionArray[i] = new Question(question, correctAnswer, incorrectAnswers);
 		}
-		for(int k = 0; k < questionArray.length; k ++){
-			System.out.println(questionArray[k]);
-		}
+		return questionArray;
 	}
 }

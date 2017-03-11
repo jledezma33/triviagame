@@ -35,7 +35,7 @@ public class Driver {
 //			public void run() {
 				new GameUI().setVisible(true);
 				try {
-					Quiz.test();
+					Quiz.getQuestions();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
