@@ -10,7 +10,7 @@ public class LogIn {
 	
 	public static boolean userSignUp(String username, String password, String confirmPassword) throws IOException{
 		   UserDataFile file = new UserDataFile();
-		   User user = new User(username, password, 0);
+		   user = new User(username, password, 0);
 		   boolean successfulSignUp = false;
 		   Pattern usernamePattern = Pattern.compile("^[A-z0-9]{1,15}$");
 		   Pattern passwordPattern = Pattern.compile("^(?=.*[A-z])(?=.*\\d)[A-z\\d]{1,12}$");
