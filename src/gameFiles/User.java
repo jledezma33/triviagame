@@ -3,7 +3,7 @@ package gameFiles;
 public class User {
 	public String userName;
 	public String password;
-	public int score = 0;
+	private int score = 0;
 	
 	public User(){};
 	
@@ -19,7 +19,7 @@ public class User {
 	}
 	
 	public String serialize(){
-		return String.format("%"+15+"s%"+"%"+12+"s%"+"%"+2+"$d", userName, password, score);
+		return String.format("%15s%12s%2d", userName, password, score);
 	}
 	
 	public void deserialize(String raw){
@@ -27,5 +27,15 @@ public class User {
 		this.password = raw.substring(15, 27).trim();
 		String rawScore = raw.substring(27).trim();
 		this.score = Integer.parseInt(rawScore);
+	}
+	
+	public void checkScore(int current){
+		if (current > score) {
+			score = current;
+		}
+	}
+
+	public int getScore() {
+		return score;
 	}
 }

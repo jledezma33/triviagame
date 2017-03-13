@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Quiz {
-	public static Question[] getQuestions() throws Exception{
-		URL quizURL = new URL("https://opentdb.com/api.php?amount=10&type=multiple");
-		URLConnection connection = quizURL.openConnection();
+	public static Question[] getQuestions(URL url) throws Exception{
+//		URL quizURL = new URL("https://opentdb.com/api.php?amount=10&type=multiple");
+		URLConnection connection = url.openConnection();
 		BufferedReader readIn =  new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String quiz = readIn.readLine();
 		readIn.close(); 

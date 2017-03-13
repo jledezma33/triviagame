@@ -2,19 +2,27 @@ package gameFiles;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+
+import jdk.nashorn.internal.runtime.QuotedStringTokenizer;
 
 public class GameUI extends JFrame{
 	
 	private Question[] questionArray;
 	private int questionNum = 0;
+	private User currentUser;
 
 	private javax.swing.JComboBox<String> CategoryDropMenu;
 	private javax.swing.JLabel CategoryLabel;
@@ -51,6 +59,7 @@ public class GameUI extends JFrame{
 	private javax.swing.JLabel QuestionLabel;
 	private javax.swing.JLabel QuestionsContentLabel;
 	private javax.swing.JPanel GamePanel;
+	private int score = 0;
 
 	public GameUI() {
 		initSignLogComponents();
@@ -341,36 +350,57 @@ public class GameUI extends JFrame{
 		QuestionLabel.setText("Question:");
 
 		QuestionsContentLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		QuestionsContentLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		QuestionsContentLabel.setSize(300, 800);
 		QuestionsContentLabel.setText("Question goes here");
 
 		AnswerOp1.setText("Option 1");
 		AnswerOp1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AnswerPicked(evt);
+				try {
+					AnswerPicked(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
 		AnswerOp2.setText("Option 2");
 		AnswerOp2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AnswerPicked(evt);
+				try {
+					AnswerPicked(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
 		AnswerOp3.setText("Option 3");
 		AnswerOp3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AnswerPicked(evt);
+				try {
+					AnswerPicked(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		AnswerOp4.setText("Option 4");
 		AnswerOp4.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AnswerPicked(evt);
+				try {
+					AnswerPicked(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		CurrentScoreLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-		CurrentScoreLabel.setText("Score: 000000");
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(GamePanel);
 		GamePanel.setLayout(jPanel2Layout);
@@ -553,31 +583,62 @@ public class GameUI extends JFrame{
 	private void LogInClicked(ActionEvent evt) throws IOException {
 		if (LogIn.userLogIn(LogInName.getText(), LogInPassword.getPassword().toString())) {
 			SignLogPanel.setVisible(false);
+			currentUser = LogIn.getUser();
 			OptionsPanel.setVisible(true);
 		}
 		
 	}
 
 	private void SignUpClicked(ActionEvent evt) throws IOException {
-		System.out.println(NewPassWordField.getPassword().toString());
-		if (LogIn.userSignUp(NewUserField.getText(), NewPassWordField.getPassword().toString(), ConfirmPassword.getPassword().toString())) {
+		
+		//System.out.println(NewPassWordField.getPassword().toString());
+		if (LogIn.userSignUp(NewUserField.getText(), buildString(NewPassWordField.getPassword()), buildString(ConfirmPassword.getPassword()))) {
 			SignLogPanel.setVisible(false);
+			currentUser = LogIn.getUser();
 			OptionsPanel.setVisible(true);
 		}
 	}
+	
+	private String buildString(char[] input){
+		String pass = "";
+		for (int i = 0; i < input.length; i++) {
+			pass += input[i];
+		}
+		return pass;
+	}
 
 	private void StartGameClicked(ActionEvent evt) throws Exception {
+		CurrentScoreLabel.setText("Score: 000000");
+		questionArray = Quiz.getQuestions(Options.generateURL(CategoryDropMenu.getSelectedItem().toString(), DifficultyDropMenu.getSelectedItem().toString()));
 		DisplayQuestion();
 		OptionsPanel.setVisible(false);
 		GamePanel.setVisible(true);
 	}
-	private void AnswerPicked(ActionEvent evt) {
+	
+	Function<Integer,Integer> addToScore = x -> x + 100;
+	
+	private void AnswerPicked(ActionEvent evt) throws Exception {
+		JButton potato = (JButton) evt.getSource();
+		if (potato.getText().equals(questionArray[questionNum].getCorrectAnswer())) {
+			score = addToScore.apply(score);
+//			score +=100;
+			CurrentScoreLabel.setText(String.format("Score: %6d", score));
+		}
 		if(questionNum+1 == questionArray.length){
 			GamePanel.setVisible(false);
+			LogIn.getUser().checkScore(score);
+			ScoreLabel.setText(String.format("Score: %6d", score));
+			HighScoreLabel.setText(String.format("HighScore: %6d", LogIn.getUser().getScore()));
+			score = 0;
+			CurrentScoreLabel.setText(String.format("Score: %6d", score));
+			questionNum = 0;
+			UserDataFile userfile = new UserDataFile();
+			userfile.save(LogIn.getUser());
 			ResultPanel.setVisible(true);
 		}
 		else{
 			questionNum++;
+			DisplayQuestion();
 		}
 	}
 	private void MenuClicked(ActionEvent evt) {
@@ -590,9 +651,39 @@ public class GameUI extends JFrame{
 	}
 
 	private void DisplayQuestion() throws Exception{
-		questionArray = Quiz.getQuestions();
-		List<Question> questionList = Arrays.asList(questionArray);
-		List<String[]> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers).collect(Collectors.toList());
+		QuestionsContentLabel.setText(questionArray[questionNum].getQuestion());
+		List<String> incorrectAnswers = Arrays.asList(questionArray[questionNum].getWrongAnswers());
+//		List<String> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers)..filter(p -> p.length > 0).collect(Collectors.toList());
+//		List<String[]> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers).collect(Collectors.toList());
+		Random r = new Random();
+		switch (r.nextInt(4)) {
+		case 0:
+			AnswerOp1.setText(questionArray[questionNum].getCorrectAnswer());
+			AnswerOp2.setText(incorrectAnswers.get(1).toString());
+			AnswerOp3.setText(incorrectAnswers.get(0).toString());
+			AnswerOp4.setText(incorrectAnswers.get(2).toString());
+			break;
+		case 1:
+			AnswerOp2.setText(questionArray[questionNum].getCorrectAnswer());
+			AnswerOp1.setText(incorrectAnswers.get(1).toString());
+			AnswerOp3.setText(incorrectAnswers.get(2).toString());
+			AnswerOp4.setText(incorrectAnswers.get(0).toString());
+			break;
+		case 2:
+			AnswerOp3.setText(questionArray[questionNum].getCorrectAnswer());
+			AnswerOp2.setText(incorrectAnswers.get(0).toString());
+			AnswerOp1.setText(incorrectAnswers.get(2).toString());
+			AnswerOp4.setText(incorrectAnswers.get(1).toString());
+			break;
+		case 3:
+			AnswerOp4.setText(questionArray[questionNum].getCorrectAnswer());
+			AnswerOp2.setText(incorrectAnswers.get(2).toString());
+			AnswerOp3.setText(incorrectAnswers.get(1).toString());
+			AnswerOp1.setText(incorrectAnswers.get(0).toString());
+			break;
+		default:
+			break;
+		}
 	}
 
 

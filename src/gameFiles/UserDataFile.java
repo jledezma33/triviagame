@@ -11,7 +11,7 @@ public class UserDataFile {
 	private RandomAccessFile file;
 	
 	public UserDataFile() throws FileNotFoundException {
-		file = new RandomAccessFile("userdata.txt", "rw");
+		file = new RandomAccessFile("userdata.rac", "rw");
 	}
 	
 	public int generateIndex(String userName) {
@@ -28,7 +28,7 @@ public class UserDataFile {
 	public User load(String username) throws IOException {
 		int index = this.generateIndex(username);
 		file.seek(index);
-		byte[] buffer = new byte[29];
+		byte[] buffer = new byte[30];
 		file.read(buffer);
 		String rawUserString = new String(buffer);
 		User user = new User();

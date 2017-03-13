@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 public class LogIn {
 	
+	private static User user;
+	
 	public static boolean userSignUp(String username, String password, String confirmPassword) throws IOException{
 		   UserDataFile file = new UserDataFile();
 		   User user = new User(username, password, 0);
@@ -14,7 +16,7 @@ public class LogIn {
 		   Pattern passwordPattern = Pattern.compile("^(?=.*[A-z])(?=.*\\d)[A-z\\d]{1,12}$");
 		   Matcher usernameMatcher = usernamePattern.matcher(username);
 		   Matcher passwordMatcher = passwordPattern.matcher(password);
-		   if(password == confirmPassword && usernameMatcher.matches() == true && passwordMatcher.matches() == true){
+		   if(password.equals(confirmPassword) && usernameMatcher.matches() && passwordMatcher.matches()){
 			   successfulSignUp =  true;
 			   file.save(user);
 		   }
@@ -24,12 +26,16 @@ public class LogIn {
 	
 	public static boolean userLogIn(String username, String password) throws IOException{
 		UserDataFile file = new UserDataFile();
-		User loadedUser = file.load(username);
+		user = file.load(username);
 		boolean successfulLoad = false;
-		if(loadedUser != null){
+		if(user != null){
 			successfulLoad = true;
 		}
 		return successfulLoad;
+	}
+
+	public static User getUser() {
+		return user;
 	}
 	
 }

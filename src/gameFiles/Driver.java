@@ -1,4 +1,4 @@
-package gameFiles;
+	package gameFiles;
 
 public class Driver {
 
@@ -34,12 +34,12 @@ public class Driver {
 //		java.awt.EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 				new GameUI().setVisible(true);
-				try {
-					Quiz.getQuestions();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					Quiz.getQuestions();
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 //			}
 //		});
 	}
