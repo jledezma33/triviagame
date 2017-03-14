@@ -16,6 +16,7 @@ public class LogIn {
 		   Pattern passwordPattern = Pattern.compile("^(?=.*[A-z])(?=.*\\d)[A-z\\d]{1,12}$");
 		   Matcher usernameMatcher = usernamePattern.matcher(username);
 		   Matcher passwordMatcher = passwordPattern.matcher(password);
+		   
 		   if(password.equals(confirmPassword) && usernameMatcher.matches() && passwordMatcher.matches()){
 			   successfulSignUp =  true;
 			   file.save(user);
@@ -30,6 +31,8 @@ public class LogIn {
 		boolean successfulLoad = false;
 		if(user != null){
 			successfulLoad = true;
+		}else{
+			return successfulLoad;
 		}
 		return successfulLoad;
 	}

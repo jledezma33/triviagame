@@ -651,10 +651,10 @@ public class GameUI extends JFrame{
 	}
 
 	private void DisplayQuestion() throws Exception{
-		QuestionsContentLabel.setText(questionArray[questionNum].getQuestion());
 		List<String> incorrectAnswers = Arrays.asList(questionArray[questionNum].getWrongAnswers());
 //		List<String> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers)..filter(p -> p.length > 0).collect(Collectors.toList());
 //		List<String[]> incorrectAnswers =  questionList.stream().map(Question::getWrongAnswers).collect(Collectors.toList());
+		QuestionsContentLabel.setText(questionArray[questionNum].getQuestion());
 		Random r = new Random();
 		switch (r.nextInt(4)) {
 		case 0:
